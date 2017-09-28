@@ -7,6 +7,8 @@
         public long UnixEpoch { get; set; }
         public string UserId { get; set; }
 
+        private Alert() { }
+
         public Alert(string topic, string message, long unixEpoch, string userId)
         {
             Topic = topic;

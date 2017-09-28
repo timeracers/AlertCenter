@@ -5,22 +5,31 @@ namespace AlertCenter.Controllers
     [Route("api/[controller]")]
     public class EmailController : Controller
     {
-        [HttpGet]
-        public JsonStatusCode Get([FromHeader(Name = "Authentication")]string jwt)
+        private AuthenticationWrapper _auth;
+        private UnnamedClass1 _emails;
+
+        public EmailController(AuthenticationWrapper auth, UnnamedClass1 emails)
         {
-            return new JsonContent("johnDoe@foo.bar");
+            _auth = auth;
+            _emails = emails;
+        }
+
+        [HttpGet]
+        public JsonStatusCode Get([FromHeader(Name = "Authorization")]string jwt)
+        {
+            return _auth.Authenticated(jwt, _emails.Get);
         }
         
         [HttpPut]
-        public JsonStatusCode Put([FromHeader(Name = "Authentication")]string jwt, [FromBody]string email)
+        public JsonStatusCode Put([FromHeader(Name = "Authorization")]string jwt, [FromBody]string email)
         {
-            return new JsonNoContent();
+            return _auth.Authenticated(jwt, userId => _emails.Set(userId, email));
         }
         
         [HttpDelete]
-        public JsonStatusCode Delete([FromHeader(Name = "Authentication")]string jwt)
+        public JsonStatusCode Delete([FromHeader(Name = "Authorization")]string jwt)
         {
-            return new JsonNoContent();
+            return _auth.Authenticated(jwt, _emails.Delete);
         }
     }
 }

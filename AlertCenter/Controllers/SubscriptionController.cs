@@ -6,28 +6,37 @@ namespace AlertCenter.Controllers
     [Route("api/[controller]")]
     public class SubscriptionController : Controller
     {
-        [HttpGet]
-        public JsonStatusCode Get()
+        private AuthenticationWrapper _auth;
+        private UnnamedClass2 _subscriptions;
+
+        public SubscriptionController(AuthenticationWrapper auth, UnnamedClass2 subscriptions)
         {
-            return new JsonContent(new string[] { "Welcome to alert center", "System is down" });
+            _auth = auth;
+            _subscriptions = subscriptions;
+        }
+
+        [HttpGet]
+        public JsonStatusCode Get([FromHeader(Name = "Authorization")]string jwt)
+        {
+            return _auth.Authenticated(jwt, _subscriptions.GetAll);
         }
         
         [HttpPut("{topic}")]
-        public JsonStatusCode Put([FromHeader(Name = "Authentication")]string jwt, string topic)
+        public JsonStatusCode Put([FromHeader(Name = "Authorization")]string jwt, string topic)
         {
-            return new JsonNoContent();
+            return _auth.Authenticated(jwt, userId => _subscriptions.Add(userId, topic));
         }
         
         [HttpDelete("{topic}")]
-        public JsonStatusCode Delete([FromHeader(Name = "Authentication")]string jwt, string topic)
+        public JsonStatusCode Delete([FromHeader(Name = "Authorization")]string jwt, string topic)
         {
-            return new JsonNoContent();
+            return _auth.Authenticated(jwt, userId => _subscriptions.Remove(userId, topic));
         }
 
         [HttpDelete]
-        public JsonStatusCode Delete([FromHeader(Name = "Authentication")]string jwt)
+        public JsonStatusCode Delete([FromHeader(Name = "Authorization")]string jwt)
         {
-            return new JsonNoContent();
+            return _auth.Authenticated(jwt, _subscriptions.RemoveAll);
         }
     }
 }

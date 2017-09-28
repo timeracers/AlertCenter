@@ -12,6 +12,7 @@ namespace AlertCenter.Controllers
             return new JsonContent("Insert Api Calls Here, maybe I will change to using swagger though");
         }
 
+        [Route("{*url}", Order = 999)]
         public JsonStatusCode DefaultRoute()
         {
             return new JsonHttpException(new DoesNotExistException("Page not found. To view all available api calls visit \"/api\"."));
