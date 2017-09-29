@@ -1,16 +1,20 @@
-﻿namespace AlertCenter.Dtos
+﻿using System;
+
+namespace AlertCenter.Dtos
 {
     public class UserEmail
     {
         public string Email { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
+        public string Username { get; set; }
 
         private UserEmail() { }
 
-        public UserEmail(string userId, string email)
+        public UserEmail(Guid userId, string email, string username)
         {
             Email = email;
             UserId = userId;
+            Username = username;
         }
     }
 }

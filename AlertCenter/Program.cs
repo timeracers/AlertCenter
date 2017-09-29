@@ -5,6 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using AlertCenter.Dtos;
+using Dapper;
+using System.Reflection;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlertCenter
 {
@@ -21,6 +25,16 @@ namespace AlertCenter
                 .Build();
 
             host.Run();
+
+            SqlMapper.SetTypeMap(
+                typeof(Topic),
+                new CustomPropertyTypeMap(
+                    typeof(Topic),
+                    (type, columnName) =>
+                        type.GetProperties().FirstOrDefault(prop =>
+                            prop.GetCustomAttributes(false)
+                                .OfType<ColumnAttribute>()
+                                .Any(attr => attr.Name == columnName))));
         }
     }
 }

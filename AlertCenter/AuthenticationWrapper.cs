@@ -11,14 +11,14 @@ namespace AlertCenter
 
         public AuthenticationWrapper(IEncryptor encryptor)
         {
-            _authenticator = new Authenticator(encryptor, new JwtHasUserIdValidator());
+            _authenticator = new Authenticator(encryptor, new JwtSubjectValidator(), new JwtHasUsernameValidator());
         }
 
-        public JsonStatusCode Authenticated(string jwt, Func<string, JsonStatusCode> authenticatedAction)
+        public JsonStatusCode Authenticated(string jwt, Func<Guid, string, JsonStatusCode> authenticatedAction)
         {
             var authenticated = _authenticator.Authenticate(jwt);
             if (authenticated.Item1 == JwtAuthenticator.Token.Verified)
-                return authenticatedAction(authenticated.Item2["userId"].ToObject<string>());
+                return authenticatedAction(authenticated.Item2["sub"].ToObject<Guid>(), authenticated.Item2["username"].ToObject<string>());
             else if (authenticated.Item1 == JwtAuthenticator.Token.BadClaims && !new JwtExpiresValidator().Validate(authenticated.Item2))
                 return new JsonHttpException(new UnauthorizedException(ErrorMessages.Expired));
             else

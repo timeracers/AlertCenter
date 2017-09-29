@@ -9,5 +9,6 @@
         public const string NotSubscribed = "You have not subscribed to that topic, did you mistype the topic?";
         public const string TopicExists = "Topic already exists";
         public const string InvalidJsonOrIncorrectType = "Either the body wasn't json or it was the incorrect type";
+        public const string InvalidEmail = "The email address is misformatted";
     }
 }

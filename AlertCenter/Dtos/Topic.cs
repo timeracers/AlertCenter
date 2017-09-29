@@ -1,14 +1,36 @@
-﻿namespace AlertCenter.Dtos
+﻿using System;
+using System.Reflection;
+using static Dapper.SqlMapper;
+
+namespace AlertCenter.Dtos
 {
-    public class Topic
+    public class Topic : ITypeMap
     {
         public string Name { get; set; }
 
-        private Topic() { }
-
-        public Topic(string name)
+        public Topic(string topic)
         {
-            Name = name;
+            Name = topic;
+        }
+
+        public ConstructorInfo FindConstructor(string[] names, Type[] types)
+        {
+            return null;
+        }
+
+        public ConstructorInfo FindExplicitConstructor()
+        {
+            return typeof(Topic).GetConstructors()[0];
+        }
+
+        public IMemberMap GetConstructorParameter(ConstructorInfo constructor, string columnName)
+        {
+            return null;
+        }
+
+        public IMemberMap GetMember(string columnName)
+        {
+            return null;
         }
     }
 }

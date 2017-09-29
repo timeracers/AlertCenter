@@ -1,13 +1,15 @@
-﻿namespace AlertCenter.Dtos
+﻿using System;
+
+namespace AlertCenter.Dtos
 {
     public class Subscription
     {
         public string Topic { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         private Subscription() {}
 
-        public Subscription(string topic, string userId)
+        public Subscription(string topic, Guid userId)
         {
             Topic = topic;
             UserId = userId;

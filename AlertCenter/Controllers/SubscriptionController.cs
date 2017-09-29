@@ -18,25 +18,25 @@ namespace AlertCenter.Controllers
         [HttpGet]
         public JsonStatusCode Get([FromHeader(Name = "Authorization")]string jwt)
         {
-            return _auth.Authenticated(jwt, _subscriptions.GetAll);
+            return _auth.Authenticated(jwt, (userId, _) => _subscriptions.GetAll(userId));
         }
         
         [HttpPut("{topic}")]
         public JsonStatusCode Put([FromHeader(Name = "Authorization")]string jwt, string topic)
         {
-            return _auth.Authenticated(jwt, userId => _subscriptions.Add(userId, topic));
+            return _auth.Authenticated(jwt, (userId, _) => _subscriptions.Add(userId, topic));
         }
         
         [HttpDelete("{topic}")]
         public JsonStatusCode Delete([FromHeader(Name = "Authorization")]string jwt, string topic)
         {
-            return _auth.Authenticated(jwt, userId => _subscriptions.Remove(userId, topic));
+            return _auth.Authenticated(jwt, (userId, _) => _subscriptions.Remove(userId, topic));
         }
 
         [HttpDelete]
         public JsonStatusCode Delete([FromHeader(Name = "Authorization")]string jwt)
         {
-            return _auth.Authenticated(jwt, _subscriptions.RemoveAll);
+            return _auth.Authenticated(jwt, (userId, _) => _subscriptions.RemoveAll(userId));
         }
     }
 }

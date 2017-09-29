@@ -17,19 +17,19 @@ namespace AlertCenter.Controllers
         [HttpGet]
         public JsonStatusCode Get([FromHeader(Name = "Authorization")]string jwt)
         {
-            return _auth.Authenticated(jwt, _emails.Get);
+            return _auth.Authenticated(jwt, (userId, _) => _emails.Get(userId));
         }
         
         [HttpPut]
         public JsonStatusCode Put([FromHeader(Name = "Authorization")]string jwt, [FromBody]string email)
         {
-            return _auth.Authenticated(jwt, userId => _emails.Set(userId, email));
+            return _auth.Authenticated(jwt, (userId, username) => _emails.Set(userId, email, username));
         }
         
         [HttpDelete]
         public JsonStatusCode Delete([FromHeader(Name = "Authorization")]string jwt)
         {
-            return _auth.Authenticated(jwt, _emails.Delete);
+            return _auth.Authenticated(jwt, (userId, _) => _emails.Delete(userId));
         }
     }
 }

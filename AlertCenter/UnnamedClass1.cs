@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using AlertCenter.Controllers;
-using AlertCenter.Dtos;
 using AlertCenter.Exceptions;
-using Npgsql;
 using System.Data.Common;
+using System;
+using MimeKit;
 
 namespace AlertCenter
 {
@@ -16,7 +16,7 @@ namespace AlertCenter
             _database = database;
         }
 
-        public JsonStatusCode Get(string userId)
+        public JsonStatusCode Get(Guid userId)
         {
             var email = _database.Query<string>($"SELECT email FROM alert.\"Emails\" WHERE userId = '{userId}'").ToArray();
             if (email.Count() == 0)
@@ -24,14 +24,22 @@ namespace AlertCenter
             return new JsonContent(email.First());
         }
 
-        public JsonStatusCode Set(string userId, string email)
+        public JsonStatusCode Set(Guid userId, string email, string username)
         {
-            _database.Execute($"INSERT INTO alert.\"Emails\" (userId, email) VALUES ('{userId}', '{email}') ON CONFLICT (userId) DO UPDATE SET " +
-                $"(email) = ('{email}')");
+            try
+            {
+                new MailboxAddress(email);
+            }
+            catch
+            {
+                return new JsonHttpException(new InvalidParametersException(ErrorMessages.InvalidEmail));
+            }
+            _database.Execute($"INSERT INTO alert.\"Emails\" (userId, username, email) VALUES ('{userId}', '{username}', '{email}') " +
+                $"ON CONFLICT (userId) DO UPDATE SET (email) = ('{email}')");
             return new JsonNoContent();
         }
 
-        public JsonStatusCode Delete(string userId)
+        public JsonStatusCode Delete(Guid userId)
         {
             try
             {
@@ -40,7 +48,7 @@ namespace AlertCenter
             }
             catch (DbException x)
             {
-                if (x.Message == "Magic String used as foreign key")
+                if (x.Message.Substring(0, x.Message.IndexOf(":")) == "23503")
                     return new JsonHttpException(new ResourceRequiredException());
                 throw x;
             }
