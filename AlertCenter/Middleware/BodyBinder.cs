@@ -32,13 +32,10 @@ namespace AlertCenter.Middleware
                 }
                 catch
                 {
-                    throw new InvalidParametersException(ErrorMessages.InvalidJsonOrIncorrectType);
+                    throw new InvalidParametersException(ExceptionMessages.InvalidJsonOrIncorrectType);
                 }
             else
-            {
                 throw new InvalidParametersException("All requests and response bodies should be application/json", 415);
-            }
-            
         }
     }
 }

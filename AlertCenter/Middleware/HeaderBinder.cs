@@ -24,7 +24,7 @@ namespace AlertCenter.Middleware
             else if (bindingContext.BinderModelName == "Authorization")
                 throw new UnauthorizedException();
             else
-                throw new InvalidParametersException(bindingContext.BinderModelName + " is required.");
+                throw new InvalidParametersException(bindingContext.BinderModelName + " header is required.");
             return Task.CompletedTask;
         }
     }

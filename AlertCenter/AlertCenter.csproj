@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -17,7 +22,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Npgsql" Version="3.2.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="timeracers.JwtAuthenticator" Version="2.1.0" />
+    <PackageReference Include="timeracers.JwtAuthenticator" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlertCenter.Dtos
+namespace AlertCenter.Subscriptions
 {
     public class Subscription
     {

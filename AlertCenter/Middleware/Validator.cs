@@ -2,7 +2,6 @@
 using System.Collections;
 using AlertCenter.Exceptions;
 using System.Linq;
-using AlertCenter.Controllers;
 
 namespace AlertCenter.Middleware
 {
@@ -13,7 +12,7 @@ namespace AlertCenter.Middleware
             var values = context.ActionDescriptor.Parameters.Select(
                 (p) => context.ActionArguments.ContainsKey(p.Name) ? context.ActionArguments[p.Name] : null).ToArray();
             if (!Validate(values))
-                context.Result = new JsonHttpException(new InvalidParametersException());
+                context.Result = new JsonFailure(new InvalidParametersException());
         }
 
         public bool Validate(object obj)

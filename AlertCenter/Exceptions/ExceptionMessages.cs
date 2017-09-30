@@ -1,6 +1,6 @@
-﻿namespace AlertCenter
+﻿namespace AlertCenter.Exceptions
 {
-    public static class ErrorMessages
+    public static class ExceptionMessages
     {
         public const string EmailWasNotSet = "Email was not set";
         public const string Expired = "Expired, please reauthenticate";

@@ -1,7 +1,7 @@
 ﻿using Npgsql;
 using System.Data;
 
-namespace AlertCenter
+namespace AlertCenter.Database
 {
     public class NpgsqlConnectionFactory
     {

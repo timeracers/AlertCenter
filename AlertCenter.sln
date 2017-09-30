@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlertCenter", "AlertCenter\AlertCenter.csproj", "{CBED9353-4D5C-47F1-A44A-BFAAF2A9E623}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlertCenterTests", "AlertCenterTests\AlertCenterTests.csproj", "{517FA878-BC05-4454-B4AD-A61A03C33FF9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{CBED9353-4D5C-47F1-A44A-BFAAF2A9E623}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBED9353-4D5C-47F1-A44A-BFAAF2A9E623}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBED9353-4D5C-47F1-A44A-BFAAF2A9E623}.Release|Any CPU.Build.0 = Release|Any CPU
-		{517FA878-BC05-4454-B4AD-A61A03C33FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{517FA878-BC05-4454-B4AD-A61A03C33FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{517FA878-BC05-4454-B4AD-A61A03C33FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{517FA878-BC05-4454-B4AD-A61A03C33FF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
