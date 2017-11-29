@@ -28,7 +28,7 @@ namespace AlertCenter.Alerts
         public JsonContent GetAllFrom(string topic)
         {
             var alerts = _database.Query<Alert>($"SELECT * FROM alert.\"Alerts\" WHERE topic = '{topic}'");
-            if (alerts.Count() == 0 && !_database.Query<bool>($"SELECT EXISTS(SELECT 1 FROM alert.\"Topics\" WHERE topic = '{topic}')").First())
+            if (alerts.Count() == 0 && !_database.Query<bool>($"SELECT EXISTS(SELECT 1 FROM alert.\"Topics\" WHERE name = '{topic}')").First())
                 return new JsonFailure(new DoesNotExistException(ExceptionMessages.TopicDoesNotExist));
             return new JsonSuccess(alerts);
         }
