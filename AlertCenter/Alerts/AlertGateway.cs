@@ -65,7 +65,7 @@ namespace AlertCenter.Alerts
         {
             try
             {
-                _database.Execute($"INSERT INTO alert.\"Topics\" (topic) VALUES ('{topic}')");
+                _database.Execute($"INSERT INTO alert.\"Topics\" (name) VALUES ('{topic}')");
                 return new JsonSuccess();
             }
             catch (DbException x)

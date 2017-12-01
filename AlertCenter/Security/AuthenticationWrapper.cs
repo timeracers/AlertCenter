@@ -18,7 +18,18 @@ namespace AlertCenter.Security
         {
             var authenticated = _authenticator.Authenticate(jwt);
             if (authenticated.Item1 == Token.Verified)
-                return authenticatedAction(authenticated.Item2["sub"].ToObject<Guid>(), authenticated.Item2["username"].ToObject<string>());
+            {
+                Guid sub = Guid.Empty;
+                try
+                {
+                    sub = authenticated.Item2["sub"].ToObject<Guid>();
+                }
+                catch
+                {
+                    return new JsonFailure(new UnauthorizedException());
+                }
+                return authenticatedAction(sub, authenticated.Item2["username"].ToObject<string>());
+            }
             else if (authenticated.Item1 == Token.BadClaims && !new JwtExpiresValidator().Validate(authenticated.Item2))
                 return new JsonFailure(new UnauthorizedException(ExceptionMessages.Expired));
             else
